@@ -7,7 +7,6 @@
 3. To run the application, run `iex -S mix` & once you're in the REPL, execute 
    ```elixir
    Monitor.summon("<valid summoner>", "<valid region>")
-   ```, 
 e.g. `Monitor.summon("theJ0YYY", "  NA1")`. 
 
 To run ExUnit tests for Monitor, run `mix test --trace` in the terminal outside `iex`.
