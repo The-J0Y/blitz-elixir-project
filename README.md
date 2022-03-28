@@ -48,4 +48,24 @@ To run ExUnit tests for Monitor, run `mix test --trace` in the terminal outside 
    became ultra convoluted for which a simpler solution would be just to put it in
    a separate module & have the supervised workers made calls to that instead of the
    parent.
-
+4. (03/27/22) Considering the original user input summoner may also be playing
+   matches in real time, the pool of all monitored summoners this summoner has
+   played with in the last five matches would be constantly changing as the original
+   summoner completes new matches over time not even just over the course of an hour
+   but over an indefinite amount of time & possibly every summoner played with in
+   the last seven, ten, or fifteen matches. Such a pool of summoners would have to be
+   dynamically supervised so that when this "root" summoner completes a match, new
+   summoners could be pooled in while old summoners could be pulled out possibly 
+   with an ETS cache to keep track?
+5. (03/25/22) The rate-limiter that was originally implemented used an ETS cache
+   table & erlang's built in atomic counter to keep track of the number of requests.
+   When the OTP task scheduling mechanism was transferred over to the Monitor.Player
+   module, I had also considered using an ETS cache to keep track of the summoner
+   worker's data & keep track of played matches everytime the module sent itself
+   messages every minute. I would imagine that using an ETS cache would be more
+   optimal with respect to the application's overall complexity since all operations
+   for using the ETS cache is in constant time, as opposed to its current 
+   implementation utilizing the GenServer state but found myself a bit pressed for
+   time to adapt it & have it compatible with other modules. This hit me hard in the
+   sense that it pained me to realize the hard way of why the software development
+   maxim of "CLOSED TO MODIFICATION, OPEN TO EXTENSION" is super important.
