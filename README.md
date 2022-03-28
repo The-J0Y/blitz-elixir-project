@@ -1,6 +1,12 @@
 # Monitor
 
-**TODO: Add description**
+## Instructions
+
+1. Configure your personal API key in `config.exs`.
+2. After you switch into the `monitor` directory in the terminal, run `mix deps.get` to get all external dependencies necessary to run the application.
+3. To run the application, run `iex -S mix` & once you're in the REPL, execute `Monitor.summon("<valid summoner>", "<valid region>"`, e.g. `Monitor.summon("theJ0YYY", "  NA1")`. 
+
+To run ExUnit tests for Monitor, run `mix test --trace` in the terminal outside `iex`.
 
 ## Installation
 
