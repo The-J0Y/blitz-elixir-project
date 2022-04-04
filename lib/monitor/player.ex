@@ -88,10 +88,8 @@ defmodule Monitor.Player do
   def handle_info(:minute_interval, summoner) do
     case new_match?(summoner) do
 
-      # If no new match has been played, another asynchronous call is scheduled
-      # to be made the next minute.
+      # If no new match, pass server state unchanged
       nil ->
-        schedule(:minute_interval)
         {:noreply, summoner}
 
       # If a new match has been played, log said match id onto console &
@@ -101,13 +99,10 @@ defmodule Monitor.Player do
       # a call is made to update it, it does not need to be logged.
       latest_match ->
         if summoner.last_mid == "" do
-          schedule(:minute_interval)
           {:noreply, %{summoner | last_mid: latest_match}}
 
         else
           Logger.info "Summoner #{summoner.name} completed match #{latest_match}"
-
-          schedule(:minute_interval)
           {:noreply, %{summoner | last_mid: latest_match}}
         end
     end
@@ -123,7 +118,7 @@ defmodule Monitor.Player do
   # asynchronous call pattern-matched said message
   # """
   def handle_info(:hour_window, _summoner) do
-    exit :normal
+    exit :shutdown
   end
 
 
@@ -140,11 +135,12 @@ defmodule Monitor.Player do
   end
 
   # Helper function new_match?/1 makes a GET request to the developer API to
-  # get the match id. Returns nil no new match, returns the latest match id
-  # otherwise.
+  # get the match id & loop another asynchronous call the following minute.
+  # Returns nil no new match, retursn the latest match id otherwise
   defp new_match?(summoner) do
     latest_match = hd(Monitor.Limiter.json_of(:for_match_id, summoner))
 
+    schedule(:minute_interval)
     if summoner.last_mid == latest_match do nil else latest_match end
   end
 end
