@@ -19,7 +19,7 @@ Primary application module for Blitz Elixir Project.
   """
 
   #  Example:
-  # iex(1)> Monitor.summon("Thaiitea", "    NA1         ")
+  # iex(1)> Monitor.summoner("Thaiitea", "    NA1         ")
   # ["Happyhouse", "ßaÇøN", "meatloaf029", "w1nd1g0o", "guizm0bong0",
   # "Joofysticks", "sternbaby", "ThaiiTea", "Slow Bugs", "Feveredregent", "Linukz",
   # "jugoat", "KotKrot12", "Zevy", "AyMikey", "DaHumptyHump", "A FELLOW N W0RD",
@@ -38,7 +38,7 @@ Primary application module for Blitz Elixir Project.
   # 15:18:47.729 [info]  Summoner Slow Bugs completed match NA1_4259100112
   # 15:18:48.559 [info]  Summoner ThaiiTea completed match NA1_4259100112
   # ** (EXIT from #PID<0.278.0>) shell process exited with reason: shutdown
-  def summon(summoner_name, region) do
+  def summoner(summoner_name, region) do
 
     # Checks if input platform routing value is valid
     Monitor.Limiter.rrv?(region)
