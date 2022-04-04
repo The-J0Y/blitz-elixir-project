@@ -58,8 +58,8 @@ defmodule Monitor.Player do
     # Initial asynchronous calls to the module are made to start both tasks of
     # monitoring new matches every minute & shutting down the server after an
     # hour, respectively.
-    schedule(:minute_interval)
-    schedule(:hour_window)
+    schedule_sweep(:minute_interval)
+    schedule_sweep(:hour_window)
 
     summoner = %{
       last_mid: "",
@@ -125,12 +125,12 @@ defmodule Monitor.Player do
   ##### helper functions ######################################################
 
   # Delayed call to module after a minute with message :minute_interval
-  defp schedule(:minute_interval) do
+  defp schedule_sweep(:minute_interval) do
     Process.send_after(self(), :minute_interval, @minute)
   end
 
   # Delayed call to module after an hour with message :hour_window
-  defp schedule(:hour_window) do
+  defp schedule_sweep(:hour_window) do
     Process.send_after(self(), :hour_window, @hour)
   end
 
@@ -140,7 +140,7 @@ defmodule Monitor.Player do
   defp new_match?(summoner) do
     latest_match = hd(Monitor.Limiter.json_of(:for_match_id, summoner))
 
-    schedule(:minute_interval)
+    schedule_sweep(:minute_interval)
     if summoner.last_mid == latest_match do nil else latest_match end
   end
 end
