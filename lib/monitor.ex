@@ -8,6 +8,7 @@ defmodule Monitor do
       prv: Monitor.Limiter.format(region),
       puuid: ""
     }
+    
     puuid = Monitor.Limiter.json_of(:for_puuid, summoner)["puuid"]
     summoner = %{summoner | puuid: puuid}
 
