@@ -5,7 +5,6 @@ defmodule Monitor.Player do
   @minute :timer.seconds(60)
   @hour   :timer.seconds(3600)
 
-
   ##### clientside api ########################################################
 
   def start_link([name, prv, puuid]) do
@@ -15,7 +14,6 @@ defmodule Monitor.Player do
   def child_spec([name, prv, puuid]) do
     %{id: puuid, start: {__MODULE__, :start_link, [[name, prv, puuid]]}}
   end
-
 
   ##### server callbacks ######################################################
 
@@ -35,14 +33,11 @@ defmodule Monitor.Player do
 
   def handle_info(:minute_interval, summoner) do
     case new_match?(summoner) do
-
       nil ->
         {:noreply, summoner}
-        
       latest_match ->
         if summoner.last_mid == "" do
           {:noreply, %{summoner | last_mid: latest_match}}
-
         else
           Logger.info "Summoner #{summoner.name} completed match #{latest_match}"
           {:noreply, %{summoner | last_mid: latest_match}}
@@ -53,7 +48,6 @@ defmodule Monitor.Player do
   def handle_info(:hour_window, _summoner) do
     exit :shutdown
   end
-
 
   ##### helper functions ######################################################
 
@@ -67,8 +61,8 @@ defmodule Monitor.Player do
 
   defp new_match?(summoner) do
     latest_match = hd(Monitor.Limiter.json_of(:for_match_id, summoner))
-
     schedule_sweep(:minute_interval)
+    
     if summoner.last_mid == latest_match do nil else latest_match end
   end
 end
