@@ -1,12 +1,10 @@
 defmodule Monitor.Limiter do
   @apikey Application.fetch_env!(:monitor, :apikey)
-
   @urlmat Application.fetch_env!(:monitor, :urlmat)
   @urlsum Application.fetch_env!(:monitor, :urlsum)
 
   @fine_frame :timer.seconds(1)
   @leaky_full 10
-
   @coarse_frame :timer.seconds(12)
   @overflow_full 10
 
@@ -31,16 +29,12 @@ defmodule Monitor.Limiter do
 
   def url_of(request, summoner, mid \\ "") do
     case request do
-
       :for_puuid ->
         "https://#{summoner.prv}#{@urlsum}#{summoner.name}?api_key=#{@apikey}"
-
       :for_match_id ->
         "https://#{rrv?(summoner.prv)}#{@urlmat}by-puuid/#{summoner.puuid}/ids?start=0&count=5&api_key=#{@apikey}"
-
       :for_summoners ->
         "https://#{rrv?(summoner.prv)}#{@urlmat}#{mid}?api_key=#{@apikey}"
-
       _              ->
         raise "Invalid URL"
     end
@@ -69,12 +63,9 @@ defmodule Monitor.Limiter do
   end
 
   defp limit_check() do
-
     case Hammer.check_rate("ratelimit_leaky", @fine_frame, @leaky_full) do
-
       {:allow, _count} ->
         Hammer.check_rate("overflow", @coarse_frame, @overflow_full)
-
       {:deny, limit} ->
         {:deny, limit}
     end
