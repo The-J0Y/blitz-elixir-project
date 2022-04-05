@@ -20,11 +20,11 @@ defmodule MonitorTest do
 
   describe "returned list of summoners has unique properties" do
     test "list should have at the very least ten summoners" do
-      num = Enum.count(Monitor.summon("theJ0YYY", "na1"))
+      num = Enum.count(Monitor.summoner("theJ0YYY", "na1"))
       assert num >= 10
     end
     test "no duplicates of user input summoner" do
-      count = Enum.count(Monitor.summon("theJ0YYY", "na1"), & &1 == "theJ0YYY")
+      count = Enum.count(Monitor.summoner("theJ0YYY", "na1"), & &1 == "theJ0YYY")
       assert count == 1
     end
   end
