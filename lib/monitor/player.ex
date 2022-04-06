@@ -37,7 +37,7 @@ defmodule Monitor.Player do
         {:noreply, summoner}
       latest_match ->
       
-        # does not log upon initial update to latest match id
+        # does not log initial update to latest match id
         if summoner.last_mid == "" do
           {:noreply, %{summoner | last_mid: latest_match}}
           
