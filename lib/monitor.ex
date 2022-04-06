@@ -1,10 +1,14 @@
 defmodule Monitor do
 
   def summoner(summoner_name, region) do
+  
+    #is there a regional routing value for the user input region?
     Monitor.Limiter.rrv?(region)
 
     summoner = %{
       name: summoner_name,
+      
+      # platform routing value
       prv: Monitor.Limiter.format(region),
       puuid: ""
     }
