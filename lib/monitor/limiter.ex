@@ -40,7 +40,7 @@ defmodule Monitor.Limiter do
     end
   end
 
-  def rrv?(prv) do
+  def rrv(prv) do
     case format(prv) do
       "br1"  -> "americas"
       "la1"  -> "americas"
