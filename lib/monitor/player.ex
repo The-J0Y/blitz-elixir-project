@@ -32,12 +32,15 @@ defmodule Monitor.Player do
   end
 
   def handle_info(:minute_interval, summoner) do
-    case new_match?(summoner) do
+    case new_match(summoner) do
       nil ->
         {:noreply, summoner}
       latest_match ->
+      
+        # does not log upon initial update to latest match id
         if summoner.last_mid == "" do
           {:noreply, %{summoner | last_mid: latest_match}}
+          
         else
           Logger.info "Summoner #{summoner.name} completed match #{latest_match}"
           {:noreply, %{summoner | last_mid: latest_match}}
@@ -59,7 +62,7 @@ defmodule Monitor.Player do
     Process.send_after(self(), :hour_window, @hour)
   end
 
-  defp new_match?(summoner) do
+  defp new_match(summoner) do
     latest_match = hd(Monitor.Limiter.json_of(:for_match_id, summoner))
     schedule_sweep(:minute_interval)
     
