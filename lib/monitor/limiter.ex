@@ -32,15 +32,15 @@ defmodule Monitor.Limiter do
       :for_puuid ->
         "https://#{summoner.prv}#{@urlsum}#{summoner.name}?api_key=#{@apikey}"
       :for_match_id ->
-        "https://#{rrv(summoner.prv)}#{@urlmat}by-puuid/#{summoner.puuid}/ids?start=0&count=5&api_key=#{@apikey}"
+        "https://#{rrv!(summoner.prv)}#{@urlmat}by-puuid/#{summoner.puuid}/ids?start=0&count=5&api_key=#{@apikey}"
       :for_summoners ->
-        "https://#{rrv(summoner.prv)}#{@urlmat}#{mid}?api_key=#{@apikey}"
+        "https://#{rrv!(summoner.prv)}#{@urlmat}#{mid}?api_key=#{@apikey}"
       _              ->
         raise "Invalid URL"
     end
   end
 
-  def rrv(prv) do
+  def rrv!(prv) do
     case format(prv) do
       "br1"  -> "americas"
       "la1"  -> "americas"
