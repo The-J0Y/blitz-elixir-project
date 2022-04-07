@@ -4,7 +4,7 @@ defmodule MonitorTest do
 
   describe "user input platform routing value & corresponding matches" do
     test "whitespace & case do not matter with prv input" do
-      assert Monitor.Limiter.rrv("             eUw1 ") == "europe"
+      assert Monitor.Limiter.rrv!("             eUw1 ") == "europe"
     end
     test "list of matches received from GET request should be same region" do
       summoner = %{name: "theJ0YYY", prv: "na1", puuid: ""}
