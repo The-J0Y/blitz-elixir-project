@@ -71,11 +71,11 @@ To run ExUnit tests for Monitor, run `mix test --trace` in the terminal outside 
    sense that it pained me to realize the hard way of why the software development
    maxim of "CLOSED TO MODIFICATION, OPEN TO EXTENSION" is super important.
 6. (04/06/22) Rereading & reviewing Elixir texts had me chance upon this excerpt: "?
-   is often used to indicate a function that returns either true or false" so I 
-   renamed the function that returns the regional routing value from rrv?/1 to rrv/1.
-   Also removed the majority of my documentation because I had realized that my
-   intended audience are tenured developers who are already familiar with the
-   language, not students or people I'm tutoring with whom I am sharing my code with.
-   I am sure there are many other conventions that my code has yet to follow due to
-   me being very new to the language but as always I'm still learning & there's
-   always room for development. 
+   is often used to indicate a function that returns either true or false, !
+   indicates a function that may return a runtime error" so I renamed the function 
+   that returns the regional routing value from rrv?/1 to rrv!/1. Also removed the 
+   majority of my documentation because I had realized that my intended audience are 
+   tenured developers who are already familiar with the language, not students or 
+   people I'm tutoring with whom I am sharing my code with. I am sure there are many 
+   other conventions that my code has yet to follow due to me being very new to the 
+   language but as always I'm still learning & there's always room for development. 
